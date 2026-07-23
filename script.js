@@ -23,7 +23,7 @@ const icons = {
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
 };
 
-/* ---------------- Module + color data ---------------- */
+/* ---------------- Module data (each with its own color) ---------------- */
 
 const MODULES = [
   {
@@ -33,14 +33,7 @@ const MODULES = [
     startWeek: 1,
     endWeek: 1,
     icon: 'lightbulb',
-    color: {
-      bar: '#0ea5e9',
-      barLight: '#e0f2fe',
-      text: '#0369a1',
-      bg: '#f0f9ff',
-      border: '#bae6fd',
-      ring: '#38bdf8',
-    },
+    color: { bar: '#0ea5e9', light: '#e0f2fe', text: '#0369a1', bg: '#f0f9ff', border: '#bae6fd', ring: '#38bdf8' },
     topics: ['Introduction: Media Education for the 21st Century', 'Design Primer'],
     assignments: [{ name: "Let's get to know each other Digital Story", dueWeek: 1 }],
   },
@@ -51,14 +44,7 @@ const MODULES = [
     startWeek: 2,
     endWeek: 2,
     icon: 'sparkles',
-    color: {
-      bar: '#14b8a6',
-      barLight: '#ccfbf1',
-      text: '#0f766e',
-      bg: '#f0fdfa',
-      border: '#99f6e4',
-      ring: '#2dd4bf',
-    },
+    color: { bar: '#14b8a6', light: '#ccfbf1', text: '#0f766e', bg: '#f0fdfa', border: '#99f6e4', ring: '#2dd4bf' },
     topics: ['Designing Social Futures Now', 'The Teacher as Designer', 'Situating Design'],
     assignments: [{ name: 'KeyWord Discussions (Post and Responses)', dueWeek: 2 }],
   },
@@ -69,14 +55,7 @@ const MODULES = [
     startWeek: 3,
     endWeek: 5,
     icon: 'layers',
-    color: {
-      bar: '#8b5cf6',
-      barLight: '#ede9fe',
-      text: '#6d28d9',
-      bg: '#f5f3ff',
-      border: '#ddd6fe',
-      ring: '#a78bfa',
-    },
+    color: { bar: '#8b5cf6', light: '#ede9fe', text: '#6d28d9', bg: '#f5f3ff', border: '#ddd6fe', ring: '#a78bfa' },
     topics: [
       'Instructionism, Constructivism, and Constructionism',
       'Culture in Design and Designs for Participatory Competencies',
@@ -93,14 +72,7 @@ const MODULES = [
     startWeek: 6,
     endWeek: 7,
     icon: 'usersIcon',
-    color: {
-      bar: '#f43f5e',
-      barLight: '#ffe4e6',
-      text: '#be123c',
-      bg: '#fff1f2',
-      border: '#fecdd3',
-      ring: '#fb7185',
-    },
+    color: { bar: '#f43f5e', light: '#ffe4e6', text: '#be123c', bg: '#fff1f2', border: '#fecdd3', ring: '#fb7185' },
     topics: [
       'Digital Spaces & The Construction of Race',
       'Designing for Diverse Populations',
@@ -119,14 +91,7 @@ const MODULES = [
     startWeek: 8,
     endWeek: 10,
     icon: 'monitor',
-    color: {
-      bar: '#f59e0b',
-      barLight: '#fef3c7',
-      text: '#b45309',
-      bg: '#fffbeb',
-      border: '#fde68a',
-      ring: '#fbbf24',
-    },
+    color: { bar: '#f59e0b', light: '#fef3c7', text: '#b45309', bg: '#fffbeb', border: '#fde68a', ring: '#fbbf24' },
     topics: [
       'E-Learning Environments: Intentional Designs',
       'Theory of Online Learning Environments',
@@ -146,14 +111,7 @@ const MODULES = [
     startWeek: 11,
     endWeek: 13,
     icon: 'gamepad',
-    color: {
-      bar: '#10b981',
-      barLight: '#d1fae5',
-      text: '#047857',
-      bg: '#ecfdf5',
-      border: '#a7f3d0',
-      ring: '#34d399',
-    },
+    color: { bar: '#10b981', light: '#d1fae5', text: '#047857', bg: '#ecfdf5', border: '#a7f3d0', ring: '#34d399' },
     topics: ['Digital Natives and Networked Publics', 'Playing to Learn', 'Designs for Serious Play'],
     assignments: [
       { name: 'KeyWord Discussions (Post and Responses)', dueWeek: 13 },
@@ -190,16 +148,22 @@ function escapeHtml(str) {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function weekPct(week) {
-  return (week / TOTAL_WEEKS) * 100;
-}
-
 function getAllAssignments() {
   const list = [];
   MODULES.forEach((m) => {
     m.assignments.forEach((a) => list.push({ ...a, module: m }));
   });
   return list;
+}
+
+function getModuleForWeek(week) {
+  return MODULES.find((m) => week >= m.startWeek && week <= m.endWeek);
+}
+
+function getAssignmentsForWeek(week, allAssignments) {
+  return allAssignments
+    .map((a, i) => ({ ...a, globalIndex: i }))
+    .filter((a) => Math.ceil(a.dueWeek) === week || (a.dueWeek === week));
 }
 
 /* ---------------- Render ---------------- */
@@ -236,24 +200,19 @@ function render() {
 
       <main class="main">
         <div class="chart-card">
-          <div class="week-ruler-wrap">
-            <div class="week-ruler" id="weekRuler">
-              ${Array.from({ length: TOTAL_WEEKS }, (_, i) => {
-                const week = i + 1;
-                return `<div class="week-ruler-cell ${hoveredWeek === week ? 'is-hovered' : ''}"><span>W${week}</span></div>`;
-              }).join('')}
-            </div>
-          </div>
-
-          ${showModules ? renderModuleTrack(allAssignments) : ''}
-          ${showAssignments ? renderAssignmentTrack(allAssignments) : ''}
-
-          <div class="axis-wrap">
-            <div class="axis-line">
-              <div class="axis-ticks">
-                ${Array.from({ length: TOTAL_WEEKS }, () => `<div class="axis-tick-col"><div class="axis-tick"></div></div>`).join('')}
+          <div class="calendar">
+            <div class="calendar-row calendar-row--header">
+              <div class="calendar-row-label"></div>
+              <div class="calendar-cells" id="weekHeaderRow">
+                ${Array.from({ length: TOTAL_WEEKS }, (_, i) => {
+                  const week = i + 1;
+                  return `<div class="week-header-cell" data-week="${week}"><span>Week ${week}</span></div>`;
+                }).join('')}
               </div>
             </div>
+
+            ${showModules ? renderModuleCalendarRow() : ''}
+            ${showAssignments ? renderAssignmentCalendarRow(allAssignments) : ''}
           </div>
         </div>
 
@@ -262,7 +221,7 @@ function render() {
         </div>
 
         <p class="footer-note">
-          Use the filter at the top to show topics, assignments, or both. Click any module or assignment marker for details.
+          Use the filter at the top to show topics, assignments, or both. Click any module or assignment block for details.
         </p>
       </main>
     </div>
@@ -271,75 +230,65 @@ function render() {
   attachEvents();
 }
 
-function renderModuleTrack() {
+function renderModuleCalendarRow() {
+  const cells = Array.from({ length: TOTAL_WEEKS }, (_, i) => {
+    const week = i + 1;
+    const m = getModuleForWeek(week);
+    if (!m) return `<div class="calendar-cell calendar-cell--empty"></div>`;
+    const isActive = m.id === activeId;
+    return `
+      <button
+        class="calendar-cell module-cell ${isActive ? 'is-active' : ''}"
+        data-module-id="${m.id}"
+        style="background:${m.color.bar}; --ring-color:${m.color.ring};"
+      >
+        <span class="module-cell-label">M${m.id}</span>
+      </button>`;
+  }).join('');
+
   return `
-    <div class="track-wrap">
-      <div class="track track--module" id="moduleTrack">
-        <div class="track-grid" id="moduleGrid">
-          ${Array.from({ length: TOTAL_WEEKS }, (_, i) => `<div class="track-grid-col" data-week="${i + 1}"></div>`).join('')}
-        </div>
-        ${MODULES.map((m) => {
-          const left = weekPct(m.startWeek - 1);
-          const width = weekPct(m.endWeek - m.startWeek + 1);
-          const isActive = m.id === activeId;
-          return `
-          <button
-            class="module-bar ${isActive ? 'is-active' : ''}"
-            data-module-id="${m.id}"
-            style="left:${left}%; width:calc(${width}% - 4px); background:${m.color.bar}; --ring-color:${m.color.ring};"
-          >
-            <div class="module-bar-glow"></div>
-            <div class="module-bar-label"><span>Module ${m.id}</span></div>
-          </button>`;
-        }).join('')}
-      </div>
+    <div class="calendar-row">
+      <div class="calendar-row-label">Module</div>
+      <div class="calendar-cells">${cells}</div>
     </div>`;
 }
 
-function renderAssignmentTrack(allAssignments) {
+function renderAssignmentCalendarRow(allAssignments) {
+  const cells = Array.from({ length: TOTAL_WEEKS }, (_, i) => {
+    const week = i + 1;
+    const dueHere = getAssignmentsForWeek(week, allAssignments);
+    if (dueHere.length === 0) return `<div class="calendar-cell calendar-cell--empty"></div>`;
+    const chips = dueHere
+      .map(
+        (a) => `
+      <button
+        class="assignment-chip ${a.module.id === activeId ? 'is-active' : ''}"
+        data-module-id="${a.module.id}"
+        style="background:${a.module.color.light}; color:${a.module.color.text};"
+        title="${escapeHtml(a.name)}"
+      >A${a.globalIndex + 1}</button>`,
+      )
+      .join('');
+    return `<div class="calendar-cell assignment-cell">${chips}</div>`;
+  }).join('');
+
   return `
-    <div class="track-wrap">
-      <div class="track track--assignment" id="assignmentTrack">
-        <div class="track-grid" id="assignmentGrid">
-          ${Array.from({ length: TOTAL_WEEKS }, (_, i) => `<div class="track-grid-col" data-week="${i + 1}"></div>`).join('')}
-        </div>
-        ${allAssignments
-          .map((a, i) => {
-            const left = weekPct(a.dueWeek - 0.5);
-            const isActive = a.module.id === activeId;
-            return `
-          <div class="assignment-marker" style="left:${left}%;">
-            <button class="assignment-marker-btn ${isActive ? 'is-active' : ''}" data-module-id="${a.module.id}">
-              <span class="assignment-dot" style="background:${a.module.color.bar};"></span>
-              <span class="assignment-tooltip" style="background:${a.module.color.bar};">A${i + 1}</span>
-            </button>
-          </div>`;
-          })
-          .join('')}
-      </div>
-      <div class="assignment-legend">
-        ${allAssignments
-          .map(
-            (a, i) => `
-          <div class="assignment-legend-item">
-            <span class="assignment-legend-dot" style="background:${a.module.color.bar};"></span>
-            <span>A${i + 1} · M${a.module.id}</span>
-          </div>`,
-          )
-          .join('')}
-      </div>
+    <div class="calendar-row">
+      <div class="calendar-row-label">Assignment</div>
+      <div class="calendar-cells">${cells}</div>
     </div>`;
 }
 
 function renderDetailPanel(activeModule, allAssignments, showModules, showAssignments) {
+  const c = activeModule.color;
   const twoCols = showModules && showAssignments;
   return `
-    <div class="detail-card" style="border-color:${activeModule.color.border};">
-      <div class="detail-banner" style="background:${activeModule.color.bg}; border-color:${activeModule.color.border};">
-        <div class="detail-banner-icon" style="background:${activeModule.color.bar};">${icons[activeModule.icon]}</div>
+    <div class="detail-card" style="border-color:${c.border};">
+      <div class="detail-banner" style="background:${c.bg}; border-color:${c.border};">
+        <div class="detail-banner-icon" style="background:${c.bar};">${icons[activeModule.icon]}</div>
         <div class="detail-banner-meta">
           <div class="detail-banner-tags">
-            <span class="detail-module-label" style="color:${activeModule.color.text};">Module ${activeModule.id}</span>
+            <span class="detail-module-label" style="color:${c.text};">Module ${activeModule.id}</span>
             <span class="detail-weeks">${icons.calendar}${activeModule.weeks}</span>
           </div>
           <h2 class="detail-title">${escapeHtml(activeModule.title)}</h2>
@@ -352,7 +301,7 @@ function renderDetailPanel(activeModule, allAssignments, showModules, showAssign
             ? `
           <div class="detail-col detail-col--topics ${twoCols ? 'has-border' : ''}">
             <div class="detail-col-head">
-              <div class="detail-col-head-icon" style="background:${activeModule.color.bg}; color:${activeModule.color.text};">${icons.bookOpen}</div>
+              <div class="detail-col-head-icon" style="background:${c.bg}; color:${c.text};">${icons.bookOpen}</div>
               <h3>Topics</h3>
             </div>
             <ul class="detail-list">
@@ -360,7 +309,7 @@ function renderDetailPanel(activeModule, allAssignments, showModules, showAssign
                 .map(
                   (t) => `
                 <li class="topic-item">
-                  <span class="topic-dot" style="background:${activeModule.color.bar};"></span>
+                  <span class="topic-dot" style="background:${c.bar};"></span>
                   <span>${escapeHtml(t)}</span>
                 </li>`,
                 )
@@ -375,7 +324,7 @@ function renderDetailPanel(activeModule, allAssignments, showModules, showAssign
             ? `
           <div class="detail-col detail-col--assignments">
             <div class="detail-col-head">
-              <div class="detail-col-head-icon" style="background:${activeModule.color.bg}; color:${activeModule.color.text};">${icons.clipboardList}</div>
+              <div class="detail-col-head-icon" style="background:${c.bg}; color:${c.text};">${icons.clipboardList}</div>
               <h3>Assignments</h3>
             </div>
             <ul class="detail-list">
@@ -386,12 +335,12 @@ function renderDetailPanel(activeModule, allAssignments, showModules, showAssign
                   );
                   return `
                 <li class="assignment-item">
-                  <span class="assignment-badge" style="background:${activeModule.color.bar};">A${globalIdx + 1}</span>
+                  <span class="assignment-badge" style="background:${c.bar};">A${globalIdx + 1}</span>
                   <div>
                     <span style="color:#334155;">${escapeHtml(a.name)}</span>
                     ${
                       a.due
-                        ? `<div><span class="assignment-due" style="background:${activeModule.color.bg}; color:${activeModule.color.text};">Due ${escapeHtml(a.due)}</span></div>`
+                        ? `<div><span class="assignment-due" style="background:${c.bg}; color:${c.text};">Due ${escapeHtml(a.due)}</span></div>`
                         : ''
                     }
                   </div>
@@ -423,34 +372,26 @@ function attachEvents() {
     });
   });
 
-  const moduleGrid = document.getElementById('moduleGrid');
-  const assignmentGrid = document.getElementById('assignmentGrid');
-  const moduleTrack = document.getElementById('moduleTrack');
-  const assignmentTrack = document.getElementById('assignmentTrack');
-
-  [moduleGrid, assignmentGrid].forEach((grid) => {
-    if (!grid) return;
-    grid.querySelectorAll('[data-week]').forEach((col) => {
-      col.addEventListener('mouseenter', () => {
-        hoveredWeek = Number(col.dataset.week);
-        updateHoverOnly();
-      });
-    });
-  });
-
-  [moduleTrack, assignmentTrack].forEach((track) => {
-    if (!track) return;
-    track.addEventListener('mouseleave', () => {
-      hoveredWeek = null;
+  document.querySelectorAll('.week-header-cell').forEach((cell) => {
+    cell.addEventListener('mouseenter', () => {
+      hoveredWeek = Number(cell.dataset.week);
       updateHoverOnly();
     });
   });
+
+  const calendar = document.querySelector('.calendar');
+  if (calendar) {
+    calendar.addEventListener('mouseleave', () => {
+      hoveredWeek = null;
+      updateHoverOnly();
+    });
+  }
 }
 
-/* Update only the week-ruler hover highlight without a full re-render,
+/* Update only the hovered-column highlight without a full re-render,
    so hovering doesn't reset button listeners mid-interaction. */
 function updateHoverOnly() {
-  document.querySelectorAll('#weekRuler .week-ruler-cell').forEach((cell, i) => {
+  document.querySelectorAll('.week-header-cell').forEach((cell, i) => {
     cell.classList.toggle('is-hovered', hoveredWeek === i + 1);
   });
 }
