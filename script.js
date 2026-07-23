@@ -1,0 +1,460 @@
+/* ---------------- Icons (inline SVG, no external deps) ---------------- */
+
+const icons = {
+  graduationCap:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>',
+  layers:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>',
+  bookOpen:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c2.5-1 5-1 8 0v14c-3-1-5.5-1-8 0V5Z"/><path d="M20 5c-2.5-1-5-1-8 0v14c3-1 5.5-1 8 0V5Z"/></svg>',
+  clipboardList:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="4" rx="1"/><path d="M9 3a3 3 0 0 1 6 0"/><path d="M6 5H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1"/><path d="M9 12h6M9 16h6"/></svg>',
+  lightbulb:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.5 14a5.5 5.5 0 1 0-7 0c.8.7 1.5 1.8 1.5 3h4c0-1.2.7-2.3 1.5-3Z"/></svg>',
+  sparkles:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3Z"/><path d="M19 17l.7 2.3L22 20l-2.3.7L19 23l-.7-2.3L16 20l2.3-.7L19 17Z"/></svg>',
+  usersIcon:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  monitor:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+  gamepad:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h4M8 10v4"/><path d="M15.5 12h.01M18 10h.01"/><path d="M17.32 5H6.68a4 4 0 0 0-3.98 3.6l-.65 6.5A2.5 2.5 0 0 0 4.5 18a2.5 2.5 0 0 0 2.05-1.08L8 15h8l1.45 1.92A2.5 2.5 0 0 0 19.5 18a2.5 2.5 0 0 0 2.5-2.9l-.65-6.5A4 4 0 0 0 17.32 5Z"/></svg>',
+  calendar:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+};
+
+/* ---------------- Module + color data ---------------- */
+
+const MODULES = [
+  {
+    id: 1,
+    title: 'Introduction',
+    weeks: 'Week 1',
+    startWeek: 1,
+    endWeek: 1,
+    icon: 'lightbulb',
+    color: {
+      bar: '#0ea5e9',
+      barLight: '#e0f2fe',
+      text: '#0369a1',
+      bg: '#f0f9ff',
+      border: '#bae6fd',
+      ring: '#38bdf8',
+    },
+    topics: ['Introduction: Media Education for the 21st Century', 'Design Primer'],
+    assignments: [{ name: "Let's get to know each other Digital Story", dueWeek: 1 }],
+  },
+  {
+    id: 2,
+    title: 'Designing Educational Futures, Now',
+    weeks: 'Week 2',
+    startWeek: 2,
+    endWeek: 2,
+    icon: 'sparkles',
+    color: {
+      bar: '#14b8a6',
+      barLight: '#ccfbf1',
+      text: '#0f766e',
+      bg: '#f0fdfa',
+      border: '#99f6e4',
+      ring: '#2dd4bf',
+    },
+    topics: ['Designing Social Futures Now', 'The Teacher as Designer', 'Situating Design'],
+    assignments: [{ name: 'KeyWord Discussions (Post and Responses)', dueWeek: 2 }],
+  },
+  {
+    id: 3,
+    title: 'Designs for Thinking, Designs for Making',
+    weeks: 'Weeks 3–5',
+    startWeek: 3,
+    endWeek: 5,
+    icon: 'layers',
+    color: {
+      bar: '#8b5cf6',
+      barLight: '#ede9fe',
+      text: '#6d28d9',
+      bg: '#f5f3ff',
+      border: '#ddd6fe',
+      ring: '#a78bfa',
+    },
+    topics: [
+      'Instructionism, Constructivism, and Constructionism',
+      'Culture in Design and Designs for Participatory Competencies',
+    ],
+    assignments: [
+      { name: 'KeyWord Discussions (Post and Responses)', dueWeek: 5 },
+      { name: 'Playing with Design', due: 'End of Week 5', dueWeek: 5 },
+    ],
+  },
+  {
+    id: 4,
+    title: 'Inclusion by Design',
+    weeks: 'Weeks 6 & 7',
+    startWeek: 6,
+    endWeek: 7,
+    icon: 'usersIcon',
+    color: {
+      bar: '#f43f5e',
+      barLight: '#ffe4e6',
+      text: '#be123c',
+      bg: '#fff1f2',
+      border: '#fecdd3',
+      ring: '#fb7185',
+    },
+    topics: [
+      'Digital Spaces & The Construction of Race',
+      'Designing for Diverse Populations',
+      'Gender, Difference, and Networked Media',
+    ],
+    assignments: [
+      { name: 'Keyword Discussion (Post and Responses)', dueWeek: 7 },
+      { name: 'Design Project Phase 1 — Proposal', due: 'End of Week 7', dueWeek: 7 },
+      { name: 'Design Project Phase 1 — Peer Feedback', due: 'End of Week 7', dueWeek: 7 },
+    ],
+  },
+  {
+    id: 5,
+    title: 'Designs for e-Learning Environments',
+    weeks: 'Weeks 8–10',
+    startWeek: 8,
+    endWeek: 10,
+    icon: 'monitor',
+    color: {
+      bar: '#f59e0b',
+      barLight: '#fef3c7',
+      text: '#b45309',
+      bg: '#fffbeb',
+      border: '#fde68a',
+      ring: '#fbbf24',
+    },
+    topics: [
+      'E-Learning Environments: Intentional Designs',
+      'Theory of Online Learning Environments',
+      'Transformational Learning Experiences: Transforming Practice',
+      'Flexible Learning: Redesigning Learning Spaces',
+      'Using Learning Technologies to Improve Assessment',
+    ],
+    assignments: [
+      { name: 'KeyWord Discussions (Post and Responses)', dueWeek: 10 },
+      { name: 'Design Project Phase 2 — Curriculum User Guide Draft', due: 'End of Week 9', dueWeek: 9 },
+    ],
+  },
+  {
+    id: 6,
+    title: 'Designs for Serious Play',
+    weeks: 'Weeks 11–13',
+    startWeek: 11,
+    endWeek: 13,
+    icon: 'gamepad',
+    color: {
+      bar: '#10b981',
+      barLight: '#d1fae5',
+      text: '#047857',
+      bg: '#ecfdf5',
+      border: '#a7f3d0',
+      ring: '#34d399',
+    },
+    topics: ['Digital Natives and Networked Publics', 'Playing to Learn', 'Designs for Serious Play'],
+    assignments: [
+      { name: 'KeyWord Discussions (Post and Responses)', dueWeek: 13 },
+      {
+        name: 'Design Project Phase 2 — Group Feedback for Curriculum User Guide Draft',
+        due: 'End of Week 11',
+        dueWeek: 11,
+      },
+      { name: 'Design Project Phase 3 — Final Product', due: 'End of Week 13', dueWeek: 13 },
+      { name: 'Design Project Phase 3 — Final Peer Reflection', due: 'End of Week 13', dueWeek: 13 },
+      { name: 'Final Keyword Reflection', due: 'End of Week 13', dueWeek: 13 },
+      { name: 'Comment on Design Projects', dueWeek: 13 },
+    ],
+  },
+];
+
+const TOTAL_WEEKS = 13;
+
+const FILTERS = [
+  { key: 'all', label: 'All', icon: 'layers' },
+  { key: 'topics', label: 'Topics', icon: 'bookOpen' },
+  { key: 'assignments', label: 'Assignments', icon: 'clipboardList' },
+];
+
+/* ---------------- State ---------------- */
+
+let activeId = 1;
+let view = 'all';
+let hoveredWeek = null;
+
+/* ---------------- Helpers ---------------- */
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function weekPct(week) {
+  return (week / TOTAL_WEEKS) * 100;
+}
+
+function getAllAssignments() {
+  const list = [];
+  MODULES.forEach((m) => {
+    m.assignments.forEach((a) => list.push({ ...a, module: m }));
+  });
+  return list;
+}
+
+/* ---------------- Render ---------------- */
+
+function render() {
+  const activeModule = MODULES.find((m) => m.id === activeId);
+  const allAssignments = getAllAssignments();
+  const showModules = view === 'all' || view === 'topics';
+  const showAssignments = view === 'all' || view === 'assignments';
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="page">
+      <header class="header">
+        <div class="header-inner">
+          <div class="header-brand">
+            <div class="header-brand-icon">${icons.graduationCap}</div>
+            <div>
+              <h1 class="header-title">Course Schedule</h1>
+              <p class="header-subtitle">${MODULES.length} Modules · ${TOTAL_WEEKS} Weeks · Click any module to see details</p>
+            </div>
+          </div>
+          <div class="filters" id="filters">
+            ${FILTERS.map(
+              (f) => `
+              <button class="filter-btn ${view === f.key ? 'is-active' : ''}" data-filter="${f.key}">
+                ${icons[f.icon]}
+                ${f.label}
+              </button>`,
+            ).join('')}
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="chart-card">
+          <div class="week-ruler-wrap">
+            <div class="week-ruler" id="weekRuler">
+              ${Array.from({ length: TOTAL_WEEKS }, (_, i) => {
+                const week = i + 1;
+                return `<div class="week-ruler-cell ${hoveredWeek === week ? 'is-hovered' : ''}"><span>W${week}</span></div>`;
+              }).join('')}
+            </div>
+          </div>
+
+          ${showModules ? renderModuleTrack(allAssignments) : ''}
+          ${showAssignments ? renderAssignmentTrack(allAssignments) : ''}
+
+          <div class="axis-wrap">
+            <div class="axis-line">
+              <div class="axis-ticks">
+                ${Array.from({ length: TOTAL_WEEKS }, () => `<div class="axis-tick-col"><div class="axis-tick"></div></div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-panel">
+          ${renderDetailPanel(activeModule, allAssignments, showModules, showAssignments)}
+        </div>
+
+        <p class="footer-note">
+          Use the filter at the top to show topics, assignments, or both. Click any module or assignment marker for details.
+        </p>
+      </main>
+    </div>
+  `;
+
+  attachEvents();
+}
+
+function renderModuleTrack() {
+  return `
+    <div class="track-wrap">
+      <div class="track track--module" id="moduleTrack">
+        <div class="track-grid" id="moduleGrid">
+          ${Array.from({ length: TOTAL_WEEKS }, (_, i) => `<div class="track-grid-col" data-week="${i + 1}"></div>`).join('')}
+        </div>
+        ${MODULES.map((m) => {
+          const left = weekPct(m.startWeek - 1);
+          const width = weekPct(m.endWeek - m.startWeek + 1);
+          const isActive = m.id === activeId;
+          return `
+          <button
+            class="module-bar ${isActive ? 'is-active' : ''}"
+            data-module-id="${m.id}"
+            style="left:${left}%; width:calc(${width}% - 4px); background:${m.color.bar}; --ring-color:${m.color.ring};"
+          >
+            <div class="module-bar-glow"></div>
+            <div class="module-bar-label"><span>Module ${m.id}</span></div>
+          </button>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+function renderAssignmentTrack(allAssignments) {
+  return `
+    <div class="track-wrap">
+      <div class="track track--assignment" id="assignmentTrack">
+        <div class="track-grid" id="assignmentGrid">
+          ${Array.from({ length: TOTAL_WEEKS }, (_, i) => `<div class="track-grid-col" data-week="${i + 1}"></div>`).join('')}
+        </div>
+        ${allAssignments
+          .map((a, i) => {
+            const left = weekPct(a.dueWeek - 0.5);
+            const isActive = a.module.id === activeId;
+            return `
+          <div class="assignment-marker" style="left:${left}%;">
+            <button class="assignment-marker-btn ${isActive ? 'is-active' : ''}" data-module-id="${a.module.id}">
+              <span class="assignment-dot" style="background:${a.module.color.bar};"></span>
+              <span class="assignment-tooltip" style="background:${a.module.color.bar};">A${i + 1}</span>
+            </button>
+          </div>`;
+          })
+          .join('')}
+      </div>
+      <div class="assignment-legend">
+        ${allAssignments
+          .map(
+            (a, i) => `
+          <div class="assignment-legend-item">
+            <span class="assignment-legend-dot" style="background:${a.module.color.bar};"></span>
+            <span>A${i + 1} · M${a.module.id}</span>
+          </div>`,
+          )
+          .join('')}
+      </div>
+    </div>`;
+}
+
+function renderDetailPanel(activeModule, allAssignments, showModules, showAssignments) {
+  const twoCols = showModules && showAssignments;
+  return `
+    <div class="detail-card" style="border-color:${activeModule.color.border};">
+      <div class="detail-banner" style="background:${activeModule.color.bg}; border-color:${activeModule.color.border};">
+        <div class="detail-banner-icon" style="background:${activeModule.color.bar};">${icons[activeModule.icon]}</div>
+        <div class="detail-banner-meta">
+          <div class="detail-banner-tags">
+            <span class="detail-module-label" style="color:${activeModule.color.text};">Module ${activeModule.id}</span>
+            <span class="detail-weeks">${icons.calendar}${activeModule.weeks}</span>
+          </div>
+          <h2 class="detail-title">${escapeHtml(activeModule.title)}</h2>
+        </div>
+      </div>
+
+      <div class="detail-body ${twoCols ? 'has-two-cols' : ''}">
+        ${
+          showModules
+            ? `
+          <div class="detail-col detail-col--topics ${twoCols ? 'has-border' : ''}">
+            <div class="detail-col-head">
+              <div class="detail-col-head-icon" style="background:${activeModule.color.bg}; color:${activeModule.color.text};">${icons.bookOpen}</div>
+              <h3>Topics</h3>
+            </div>
+            <ul class="detail-list">
+              ${activeModule.topics
+                .map(
+                  (t) => `
+                <li class="topic-item">
+                  <span class="topic-dot" style="background:${activeModule.color.bar};"></span>
+                  <span>${escapeHtml(t)}</span>
+                </li>`,
+                )
+                .join('')}
+            </ul>
+          </div>`
+            : ''
+        }
+
+        ${
+          showAssignments
+            ? `
+          <div class="detail-col detail-col--assignments">
+            <div class="detail-col-head">
+              <div class="detail-col-head-icon" style="background:${activeModule.color.bg}; color:${activeModule.color.text};">${icons.clipboardList}</div>
+              <h3>Assignments</h3>
+            </div>
+            <ul class="detail-list">
+              ${activeModule.assignments
+                .map((a) => {
+                  const globalIdx = allAssignments.findIndex(
+                    (aa) => aa.module.id === activeModule.id && aa.name === a.name && aa.dueWeek === a.dueWeek,
+                  );
+                  return `
+                <li class="assignment-item">
+                  <span class="assignment-badge" style="background:${activeModule.color.bar};">A${globalIdx + 1}</span>
+                  <div>
+                    <span style="color:#334155;">${escapeHtml(a.name)}</span>
+                    ${
+                      a.due
+                        ? `<div><span class="assignment-due" style="background:${activeModule.color.bg}; color:${activeModule.color.text};">Due ${escapeHtml(a.due)}</span></div>`
+                        : ''
+                    }
+                  </div>
+                </li>`;
+                })
+                .join('')}
+            </ul>
+          </div>`
+            : ''
+        }
+      </div>
+    </div>`;
+}
+
+/* ---------------- Events ---------------- */
+
+function attachEvents() {
+  document.querySelectorAll('[data-filter]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      view = btn.dataset.filter;
+      render();
+    });
+  });
+
+  document.querySelectorAll('[data-module-id]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeId = Number(btn.dataset.moduleId);
+      render();
+    });
+  });
+
+  const moduleGrid = document.getElementById('moduleGrid');
+  const assignmentGrid = document.getElementById('assignmentGrid');
+  const moduleTrack = document.getElementById('moduleTrack');
+  const assignmentTrack = document.getElementById('assignmentTrack');
+
+  [moduleGrid, assignmentGrid].forEach((grid) => {
+    if (!grid) return;
+    grid.querySelectorAll('[data-week]').forEach((col) => {
+      col.addEventListener('mouseenter', () => {
+        hoveredWeek = Number(col.dataset.week);
+        updateHoverOnly();
+      });
+    });
+  });
+
+  [moduleTrack, assignmentTrack].forEach((track) => {
+    if (!track) return;
+    track.addEventListener('mouseleave', () => {
+      hoveredWeek = null;
+      updateHoverOnly();
+    });
+  });
+}
+
+/* Update only the week-ruler hover highlight without a full re-render,
+   so hovering doesn't reset button listeners mid-interaction. */
+function updateHoverOnly() {
+  document.querySelectorAll('#weekRuler .week-ruler-cell').forEach((cell, i) => {
+    cell.classList.toggle('is-hovered', hoveredWeek === i + 1);
+  });
+}
+
+/* ---------------- Init ---------------- */
+
+document.addEventListener('DOMContentLoaded', render);
